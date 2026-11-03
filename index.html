@@ -1,0 +1,318 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>The Arzan Collection — Birthday Edition</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,400;0,500;0,600;0,700;1,800&display=swap">
+<style>
+:root{
+  --bg:#fff; --ink:#2a2323; --mute:#8d8585; --card:#ececec; --line:#cfc9c9; --ph:#d6d1d1; --phink:#7b7474;
+  --red:#a4122e; --red2:#7d0c22;
+  box-sizing:border-box;
+  padding-top:env(safe-area-inset-top,0px); padding-bottom:env(safe-area-inset-bottom,0px);
+}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#171111;--ink:#f1eaea;--mute:#a39a9a;--card:#272020;--line:#463d3d;--ph:#3a3232;--phink:#b3a9a9}}
+:root[data-theme="dark"]{--bg:#171111;--ink:#f1eaea;--mute:#a39a9a;--card:#272020;--line:#463d3d;--ph:#3a3232;--phink:#b3a9a9}
+*{box-sizing:border-box;margin:0}
+html{scroll-padding-top:env(safe-area-inset-top,0px)}
+body{background:var(--bg);color:var(--ink);font-family:Montserrat,"Helvetica Neue",Arial,sans-serif;font-size:13px;line-height:1.55}
+button{font:inherit;color:inherit;border:0;background:none;cursor:pointer;padding:0}
+button:focus-visible,a:focus-visible{outline:2px solid var(--red);outline-offset:2px}
+#musicGate{position:fixed;inset:0;z-index:9999;display:none;align-items:center;justify-content:center;background:rgba(20,10,13,.88);color:#fff;text-align:center;padding:24px}
+#musicGate.show{display:flex}
+#musicGate button{background:#a4122e;color:#fff;border:1px solid rgba(255,255,255,.7);border-radius:999px;padding:15px 25px;font-weight:700;letter-spacing:.08em;box-shadow:0 8px 28px rgba(0,0,0,.3)}
+#musicGate p{font-size:11px;margin-top:12px;opacity:.85}
+.wrap{max-width:780px;margin:0 auto}
+.photo{background:var(--ph);color:var(--phink);display:flex;align-items:center;justify-content:center;text-align:center;overflow:hidden;font-size:12px}
+.photo img{width:100%;height:100%;object-fit:cover;display:block}
+.bar{height:14px;background:var(--red)}
+.deck{display:grid;grid-template-columns:minmax(150px,26%) 1fr minmax(170px,30%);gap:0;background:var(--bg);border-bottom:22px solid var(--red)}
+.side{padding:14px 14px 18px;display:flex;flex-direction:column;gap:10px;font-size:10px}
+.me{display:flex;align-items:center;gap:8px}
+.av{width:30px;height:30px;border-radius:50%;flex:0 0 30px;background:var(--ph);overflow:hidden}
+.me b{color:var(--red);font-size:13px;font-weight:500;display:block;line-height:1.2}
+.menu{display:flex;flex-direction:column;gap:4px;margin:6px 0}
+.menu a{padding:6px 8px;border-radius:4px;color:var(--ink);text-decoration:none;letter-spacing:.04em;font-size:9px}
+.menu a.on{background:linear-gradient(var(--red),var(--red2));color:#fff}
+.big{background:var(--card);border-radius:8px;padding:11px 8px;text-align:center;font-size:14px;letter-spacing:.03em}
+.stage{position:relative;min-height:360px;border-radius:0}
+.stage .photo{position:absolute;inset:0}
+.clock{position:relative;z-index:1;text-align:center;color:#fff;padding-top:18px;text-shadow:0 1px 8px rgba(0,0,0,.5)}
+.clock .t{font-size:38px;font-weight:300;letter-spacing:.08em;line-height:1.1}
+.clock .d{font-size:10px}
+.note{position:absolute;z-index:2;right:0;bottom:12%;width:min(86%,250px);background:#fff;color:#2a2323;border-radius:6px 0 0 6px;box-shadow:0 4px 16px rgba(0,0,0,.2);font-size:8.5px;line-height:1.45}
+.note p{padding:8px 10px}
+.note .r{display:flex;justify-content:space-between;color:var(--red);padding:6px 10px;border-bottom:1px solid #eee;font-size:8px}
+.note .r:last-child{border:0;border-top:1px solid #eee}
+.right{padding:12px 12px 14px;display:flex;flex-direction:column;gap:10px}
+.right h4{font-size:8px;font-weight:600;letter-spacing:.05em;display:flex;justify-content:space-between;align-items:center}
+.right h4 i{background:var(--red);color:#fff;border-radius:50%;width:17px;height:17px;display:grid;place-items:center;font-size:10px}
+.cards{display:grid;grid-template-columns:1fr 1fr;gap:6px}
+.pc{background:var(--card);border-radius:8px;padding:8px 4px;text-align:center;font-size:8px;line-height:1.3}
+.pc .av{width:30px;height:30px;margin:0 auto 4px}
+.pc em{display:inline-block;background:var(--red);color:#fff;font-style:normal;font-size:6px;padding:1px 6px;border-radius:2px;margin:3px 0}
+.pc div.s{display:flex;justify-content:space-around;font-size:7px;border-top:1px solid var(--line);margin-top:4px;padding-top:3px}
+.music{background:var(--card);border-radius:12px;padding:10px;display:flex;align-items:center;gap:8px}
+.play{width:36px;height:36px;flex:0 0 36px;border-radius:50%;background:var(--red);position:relative}
+.play::after{content:"";position:absolute;left:38%;top:28%;border-left:11px solid #fff;border-top:7px solid transparent;border-bottom:7px solid transparent}
+.play.on::after{border:0;left:30%;top:28%;width:40%;height:44%;background:linear-gradient(90deg,#fff 0 35%,transparent 35% 65%,#fff 65%)}
+.music .m{flex:1;font-size:10px;font-weight:600;line-height:1.35;min-width:0}
+.music .m span{display:block;font-weight:400;color:var(--mute)}
+.pick{font-size:9px;font-weight:600;background:var(--ink);color:var(--bg);border-radius:99px;padding:5px 9px}
+.thumbs{display:grid;grid-template-rows:1fr 1fr;gap:6px;flex:1;min-height:150px}
+.thumbs .photo{border-radius:6px}
+.col-head{display:flex;align-items:center;gap:10px;padding:18px 20px 0;flex-wrap:wrap}
+.logo{width:26px;height:26px;border-radius:50%;background:var(--red);color:#fff;display:grid;place-items:center;font-weight:700;font-size:12px}
+.col-head small{font-size:8px;font-weight:600;line-height:1.3;letter-spacing:.03em;margin-right:auto}
+.tabs{display:flex;gap:22px;font-size:8px;letter-spacing:.06em;color:var(--mute)}
+.tabs a{color:inherit;text-decoration:none}
+.tabs a.on{color:var(--ink);text-decoration:underline}
+.tag{padding:10px 20px 14px;font-size:9px;color:var(--red);text-decoration:underline;font-weight:600}
+.cols{display:grid;grid-template-columns:150px 150px 1fr;gap:16px;padding:0 20px 24px}
+.pills{display:flex;flex-direction:column;gap:14px;align-content:start}
+.pill{border:1px solid var(--line);border-radius:99px;padding:9px 6px;text-align:center;font-size:11px;letter-spacing:.04em}
+.pill.on{background:var(--red);border-color:var(--red);color:#fff;font-weight:600}
+.dots{letter-spacing:.2em;font-size:20px;margin:18px 0 0 10px}
+.fine{font-size:8.5px;line-height:1.5;margin-top:18px;letter-spacing:.02em}
+.repost{display:inline-block;margin-top:34px;background:var(--red);color:#fff;border-radius:99px;padding:3px 11px;font-size:8px}
+.txt{background:var(--card);border-radius:8px;padding:14px;font-size:11px;line-height:1.95;align-self:start;min-height:260px;white-space:pre-line}
+.pics{display:grid;gap:8px;grid-template-rows:1fr 1fr}
+.pics .photo{border-radius:20px;min-height:190px}
+.blogs{display:grid;grid-template-columns:1fr 1.25fr;gap:8px;padding:0 20px}
+.bl{background:var(--red);color:#fff;padding:18px 16px;font-size:8.5px;font-weight:600;letter-spacing:.05em;line-height:1.7}
+.bl h2{font-size:26px;font-style:italic;font-weight:800;text-decoration:underline;margin-bottom:16px;letter-spacing:0}
+.bl p{margin-bottom:8px}
+.post{background:var(--card);padding:14px 16px;font-size:11px;position:relative;display:flex;flex-direction:column;gap:12px}
+.post .avs{display:flex;gap:6px}
+.post .avs .av{width:32px;height:32px;flex-basis:32px}
+.post small{margin-top:auto;color:var(--mute);font-size:9px}
+.stories{display:flex;justify-content:space-between;gap:20px;padding:34px 20px 0;flex-wrap:wrap}
+.stories h3{font-size:24px;font-weight:400;margin-bottom:14px}
+.chip{display:block;width:max-content;background:var(--red);color:#fff;border-radius:99px;padding:5px 14px;font-size:10px;font-weight:600;margin-bottom:10px}
+.chip.o{background:var(--card);color:var(--ink);font-weight:400}
+.sr{max-width:340px;text-align:right}
+.sr h3{color:var(--red);font-weight:700;text-decoration:underline;font-size:22px;letter-spacing:.02em}
+.sr p{font-size:10px;line-height:1.7}
+.foot{text-align:center;padding:60px 20px 28px;font-size:8px;letter-spacing:.04em;line-height:1.6}
+.pager{display:inline-flex;gap:4px;background:var(--red);padding:3px 8px;border-radius:99px;margin-bottom:24px}
+.pager i{width:5px;height:5px;border-radius:50%;background:#fff;opacity:.6}.pager i:first-child{opacity:1}
+.foot b{display:block;margin-top:8px;font-size:9px}
+@media (max-width:620px){
+  .deck{grid-template-columns:1fr}
+  .stage{min-height:340px;order:-1}
+  .side,.right{padding:14px 18px}
+  .cols,.blogs{grid-template-columns:1fr}
+  .cols{gap:12px}
+  .pics{grid-template-rows:repeat(2,minmax(180px,1fr))}
+  .tabs{width:100%;gap:14px;flex-wrap:wrap}
+  .sr{text-align:left}
+  .clock .t{font-size:clamp(28px,8vw,38px)}
+  .note{width:min(92%,280px);bottom:8%}
+}
+@media (max-width:380px){
+  .stories{padding-left:14px;padding-right:14px}
+  .col-head{padding-left:14px;padding-right:14px}
+  .cols,.blogs{padding-left:14px;padding-right:14px}
+  .music{gap:6px;padding:8px}
+  .pick{font-size:8px;padding:5px 7px}
+}
+.clock{pointer-events:none}
+.av img{width:100%;height:100%;object-fit:cover;display:block}
+.editbtn{position:fixed;right:14px;bottom:calc(14px + env(safe-area-inset-bottom,0px));z-index:50;background:var(--red);color:#fff;border-radius:99px;padding:9px 16px;font-size:12px;font-weight:600;box-shadow:0 4px 14px rgba(0,0,0,.3)}
+body.editing .photo,body.editing .av{cursor:pointer;outline:2px dashed var(--red);outline-offset:-2px}
+body.editing [contenteditable]{outline:1px dashed var(--red);outline-offset:2px}
+</style>
+</head>
+<body>
+<div class="wrap">
+<div class="bar"></div>
+<section class="deck">
+  <aside class="side">
+    <div class="me"><div class="av"></div><div><b>A LITTLE SURPRISE</b>@for.arzan</div></div>
+    <nav class="menu"><a href="#">THE ARCHIVE</a><a href="#" class="on">BIRTHDAY EDITION</a><a href="#">LITTLE MOMENTS</a><a href="#">FAVORITES</a></nav>
+    <p>A little page, a little story, and a thousand wishes dedicated to you.</p>
+    <div class="big">THE BIRTHDAY EDITION</div><div class="big">A DAY TO REMEMBER</div><div class="big">MADE FOR YOU</div>
+    <p>Today, the world celebrates another beautiful chapter of your life.</p>
+  </aside>
+  <div class="stage">
+    <div class="photo"><img src="happy.jpg" alt="Arzan — birthday photo"></div>
+    <div class="clock"><div class="t" id="clk">17:45</div><div class="d" id="dt">Today, a day to remember</div></div>
+    <div class="note">
+      <div class="r"><span>A LITTLE NOTE</span><span>JUST FOR YOU</span></div>
+      <p>A new chapter begins today. May it bring you closer to everything your heart has been quietly wishing for.</p>
+      <p>Consider this a little reminder that your existence is worth celebrating, today and every day.</p>
+      <div class="r"><span>WITH WARM WISHES</span><span>CHAPTER 01</span></div>
+    </div>
+  </div>
+  <aside class="right">
+    <h4><span>THE SPECIAL EDITION<br>FEATURING ARZAN</span><i>i</i></h4>
+    <div class="cards">
+      <div class="pc"><div class="av"><img src="cortis.jpg" alt="Arzan profile"></div>ARZAN<br>@thebirthdayboy<br><em>BIRTHDAY STAR</em><div class="s"><span>01</span><span>22</span><span>∞</span></div></div>
+      <div class="pc"><div class="av"><img src="marjann.jpg" alt="Birthday profile"></div>THE NEW CHAPTER<br>@novemberedition<br><em>CELEBRATE</em><div class="s"><span>LOVE</span><span>JOY</span><span>HOPE</span></div></div>
+    </div>
+    <div class="music">
+      <button class="play" data-play aria-label="Play song"></button>
+      <div class="m"><span style="color:var(--ink);font-weight:600" data-title>A LITTLE SONG FOR YOU</span><span data-artist>A melody to remember</span></div>
+      <button class="pick" id="pick">Choose song</button>
+    </div>
+    <div class="thumbs"><div class="photo"><img src="day.jpg" alt="Memory photo 01"></div><div class="photo"><img src="birth.jpg" alt="Memory photo 02"></div></div>
+  </aside>
+</section>
+
+<div class="col-head">
+  <div class="logo">A</div><small>THE ARZAN<br>COLLECTION</small>
+  <nav class="tabs" id="tabs"><a href="#">THE ARCHIVE</a><a href="#">LITTLE MOMENTS</a><a href="#" class="on">BIRTHDAY NOTES</a><a href="#">MEMORIES</a></nav>
+</div>
+<p class="tag">#AWHOLECHAPTEROFARZAN</p>
+<section class="cols">
+  <div>
+    <div class="pills" id="pills"><button class="pill">THE BEGINNING</button><button class="pill">DEAR ARZAN</button><button class="pill on">YOUR DAY</button><button class="pill">LITTLE STORIES</button></div>
+    <div class="dots">•••</div>
+    <p class="fine">ANOTHER YEAR.<br>ANOTHER CHAPTER.<br>ENDLESS POSSIBILITIES.</p>
+    <span class="repost">⟲ SHARE THE JOY</span>
+  </div>
+  <div class="txt">Dear Arzan,
+
+Happy Birthday!
+
+Today marks another year of your existence, another chapter of your story, and another opportunity to discover just how beautiful life can be.
+
+I hope this year brings you countless reasons to smile, wonderful opportunities to grow, and unexpected moments that turn into your favorite memories.
+
+May you always have the courage to pursue your dreams, the patience to embrace your journey, and the strength to get through the days that aren't quite as easy.
+
+Never feel like you have to figure everything out at once. Life is a collection of little moments, unexpected turns, and beautiful beginnings. Take your time, enjoy the process, and remember to appreciate how far you've come.
+
+I hope you meet people who bring genuine happiness into your life, discover places that make you feel alive, and experience things that remind you how wonderful it is to be here.
+
+Above all, I hope you never lose the things that make you uniquely you.
+
+Here's to your new chapter, Arzan. May it be kinder, brighter, and filled with everything you've been hoping for.
+
+Happy Birthday. You deserve a beautiful year ahead.</div>
+  <div class="pics">
+    <div class="photo"><img src="memori 1.jpg" alt="Memory Photo 03"></div>
+    <div class="photo"><img src="memori 2.jpg" alt="Memory Photo 04"></div>
+  </div>
+</section>
+
+<section class="blogs">
+  <div class="bl"><h2>BLOGS</h2><p>SOME DAYS DESERVE TO BE REMEMBERED.</p><p>SOME PEOPLE DESERVE TO BE CELEBRATED.</p><p>AND TODAY, IT IS ALL ABOUT YOU.</p></div>
+  <div class="post">
+    <div class="avs"><div class="av"></div><div class="av"></div></div>
+    <p>A little thought for today:<br><br>I hope you never underestimate the importance of your presence. You may not always notice it, but every year you grow, learn, and become a little more of the person you're meant to be.<br><br>So today, celebrate yourself. Celebrate the little victories, the lessons, the memories, and even the moments that brought you here.<br><br>The world still has so many beautiful things waiting for you.<br><br>With the warmest birthday wishes.</p>
+    <small>A birthday letter, written with care.</small>
+  </div>
+</section>
+
+<section class="stories">
+  <div><h3>THE BIRTHDAY ARCHIVE</h3><span class="chip">A SPECIAL DAY</span><span class="chip o">CHAPTER 01 — ARZAN</span></div>
+  <div class="sr"><h3>HAPPY BIRTHDAY, ARZAN</h3><p style="margin-top:14px">And just like that, another chapter begins.<br><br>I hope the days ahead treat you gently. I hope you find happiness in unexpected places, peace in the middle of uncertainty, and reasons to keep looking forward.<br><br>May your dreams find their way into reality, may your efforts lead you somewhere wonderful, and may you always have something beautiful to look forward to.<br><br>Thank you for being part of this world and for making this little corner of it worth celebrating.<br><br>Enjoy your day, Arzan. This chapter belongs to you.<br><br>With love and the warmest wishes, always.</p></div>
+</section>
+<footer class="foot">
+  <div class="pager"><i></i><i></i><i></i><i></i></div><br>
+  A LITTLE PAGE MADE TO CELEBRATE A WHOLE LOT OF YOU.<b>AN EDITION CREATED ESPECIALLY FOR ARZAN.</b>
+</footer>
+</div>
+
+<button class="editbtn" id="editbtn" aria-label="Birthday Mode / Edit Mode">✎ Birthday Mode / Edit Mode</button>
+<div id="musicGate" role="dialog" aria-label="Start birthday music">
+  <div><button id="enterWithMusic" type="button">TAP TO ENTER ♡</button><p>A little song is waiting for you</p></div>
+</div>
+<audio id="aud" src="beautiful-thang.mp3" preload="auto" loop playsinline></audio>
+<input type="file" id="file" accept="audio/*" hidden>
+<script>
+var SONG = { src: "beautiful-thang.mp3", title: "Beautiful Thang", artist: "ShyBully" };
+var a = document.getElementById('aud'), f = document.getElementById('file');
+var btns = document.querySelectorAll('[data-play]');
+function setInfo(t, ar) {
+  document.querySelectorAll('[data-title]').forEach(function (e) { e.textContent = t; });
+  document.querySelectorAll('[data-artist]').forEach(function (e) { e.textContent = ar; });
+}
+function mark(on) { btns.forEach(function (b) { b.classList.toggle('on', on); b.setAttribute('aria-label', on ? 'Pause song' : 'Play song'); }); }
+a.loop = true; a.src = SONG.src; a.preload = 'auto'; setInfo(SONG.title, SONG.artist);
+var gate = document.getElementById('musicGate');
+function startMusicFromTap() {
+  a.play().then(function () { gate.classList.remove('show'); }).catch(function () { gate.classList.add('show'); });
+}
+// Attempt audible autoplay. Browsers may block it until the visitor taps.
+window.addEventListener('load', function () {
+  a.play().then(function () { gate.classList.remove('show'); }).catch(function () { gate.classList.add('show'); });
+});
+document.getElementById('enterWithMusic').addEventListener('click', startMusicFromTap);
+btns.forEach(function (b) { b.addEventListener('click', function () {
+  if (!a.src) { f.click(); return; }
+  if (a.paused) { a.play().catch(function () {}); } else { a.pause(); }
+}); });
+document.getElementById('pick').addEventListener('click', function () { f.click(); });
+f.addEventListener('change', function () {
+  var file = f.files[0]; if (!file) return;
+  a.src = URL.createObjectURL(file);
+  setInfo(file.name.replace(/\.[^.]+$/, ''), SONG.artist);
+  a.play().catch(function () {});
+});
+a.addEventListener('play', function () { mark(true); gate.classList.remove('show'); });
+a.addEventListener('pause', function () { mark(false); });
+a.addEventListener('ended', function () { mark(false); });\na.addEventListener('error', function () { mark(false); });
+
+function tick() {
+  var n = new Date();
+  document.getElementById('clk').textContent = n.toLocaleTimeString('en-GB', { hour: '2-digit', minute: '2-digit', hour12: false });
+  document.getElementById('dt').textContent = n.toLocaleDateString('en-US', { weekday: 'long', day: 'numeric', month: 'long', year: 'numeric' });
+}
+tick(); setInterval(tick, 30000);
+
+function pick(box, sel, cls) { box.addEventListener('click', function (e) {
+  var t = e.target.closest(sel); if (!t) return; e.preventDefault();
+  box.querySelectorAll(sel).forEach(function (x) { x.classList.toggle(cls, x === t); });
+}); }
+pick(document.getElementById('pills'), '.pill', 'on');
+pick(document.getElementById('tabs'), 'a', 'on');
+
+var fi = document.createElement('input'); fi.type = 'file'; fi.accept = 'image/*'; fi.hidden = true; document.body.appendChild(fi);
+var target = null, editing = false;
+var TXT = '.side p,.big,.me b,.note p,.note .r span,.txt,.fine,.tag,.col-head small,.tabs a,.pill,.repost,.bl h2,.bl p,.post p,.post small,.stories h3,.chip,.sr h3,.sr p,.foot,.pc,.music .m span,.clock .d,.right h4 span,.menu a';
+document.getElementById('editbtn').addEventListener('click', function () {
+  editing = !editing;
+  document.body.classList.toggle('editing', editing);
+  this.textContent = editing ? '✓ Done Editing' : '✎ Birthday Mode / Edit Mode';
+  this.setAttribute('aria-label', editing ? 'Done Editing' : 'Birthday Mode / Edit Mode');
+  document.querySelectorAll(TXT).forEach(function (e) {
+    if (editing) {
+      e.setAttribute('contenteditable', 'true');
+      e.setAttribute('spellcheck', 'true');
+    } else {
+      e.removeAttribute('contenteditable');
+      e.removeAttribute('spellcheck');
+    }
+  });
+});
+document.addEventListener('click', function (e) {
+  if (!editing) return;
+  var el = e.target.closest('.photo,.av');
+  if (!el) return;
+  e.preventDefault();
+  e.stopPropagation();
+  target = el;
+  fi.click();
+});
+fi.addEventListener('change', function () {
+  var file = fi.files[0];
+  if (!file || !target) { fi.value = ''; return; }
+  if (!file.type || file.type.indexOf('image/') !== 0) { fi.value = ''; target = null; return; }
+  var r = new FileReader();
+  r.onload = function () {
+    target.innerHTML = '';
+    var im = document.createElement('img');
+    im.alt = target.getAttribute('data-image-alt') || 'Birthday memory photo';
+    im.src = r.result;
+    target.appendChild(im);
+    target = null;
+  };
+  r.readAsDataURL(file);
+  fi.value = '';
+});
+</script>
+</body>
+</html>
