@@ -216,14 +216,20 @@ Happy Birthday. You deserve a beautiful year ahead.</div>
 </footer>
 </div>
 
-<button class="editbtn" id="editbtn" aria-label="Birthday Mode / Edit Mode">✎ Birthday Mode / Edit Mode</button>
+<button class="editbtn" id="editbtn" aria-label="Birthday Mode / Edit Mode">✎ Birthday Mode</button>
 <div id="musicGate" role="dialog" aria-label="Start birthday music">
   <div><button id="enterWithMusic" type="button">TAP TO ENTER ♡</button><p>A little song is waiting for you</p></div>
 </div>
-<audio id="aud" src="beautiful-thang.mp3" preload="auto" loop playsinline></audio>
+<audio id="aud"
+src="https://evaa-dotcom.github.io/mArjbirthday/beautiful-thang.mp3"
+preload="auto" loop playsinline></audio>
 <input type="file" id="file" accept="audio/*" hidden>
 <script>
-var SONG = { src: "beautiful-thang.mp3", title: "Beautiful Thang", artist: "ShyBully" };
+var SONG = {
+  src: "https://evaa-dotcom.github.io/mArjbirthday/beautiful-thang.mp3",
+  title: "Beautiful Thang",
+  artist: "ShyBully"
+};
 var a = document.getElementById('aud'), f = document.getElementById('file');
 var btns = document.querySelectorAll('[data-play]');
 function setInfo(t, ar) {
