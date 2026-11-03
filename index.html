@@ -216,7 +216,7 @@ Happy Birthday. You deserve a beautiful year ahead.</div>
 </footer>
 </div>
 
-<button class="editbtn" id="editbtn" aria-label="Birthday Mode / Edit Mode">✎ Birthday Mode / Edit Mode</button>
+<button class="editbtn" id="editbtn" aria-label="Birthday Mode">✎ Birthday Mode</button>
 <div id="musicGate" role="dialog" aria-label="Start birthday music">
   <div><button id="enterWithMusic" type="button">TAP TO ENTER ♡</button><p>A little song is waiting for you</p></div>
 </div>
@@ -276,8 +276,8 @@ var TXT = '.side p,.big,.me b,.note p,.note .r span,.txt,.fine,.tag,.col-head sm
 document.getElementById('editbtn').addEventListener('click', function () {
   editing = !editing;
   document.body.classList.toggle('editing', editing);
-  this.textContent = editing ? '✓ Done Editing' : '✎ Birthday Mode / Edit Mode';
-  this.setAttribute('aria-label', editing ? 'Done Editing' : 'Birthday Mode / Edit Mode');
+  this.textContent = editing ? '✓ Done Editing' : '✎ Birthday Mode';
+  this.setAttribute('aria-label', editing ? 'Done Editing' : 'Birthday Mode');
   document.querySelectorAll(TXT).forEach(function (e) {
     if (editing) {
       e.setAttribute('contenteditable', 'true');
